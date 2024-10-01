@@ -28,7 +28,6 @@ export const App = () => {
   const [otpCode, setCode] = useState('');
   const [price, setPrice] = useState(268.7);
   const [count, setCount] = useState(100);
-  const [step, setStep] = useState(1);
   const [reqType, setReqTpe] = useState('Лимитная заявка');
   const [thxShow, setThx] = useState(LS.getItem(LSKeys.ShowThx, false));
   const splittedOtp = otpCode.split('');
@@ -76,54 +75,6 @@ export const App = () => {
   if (thxShow) {
     return <ThxLayout />;
   }
-
-  const bsContent = () => {
-    switch (step) {
-      case 1:
-        return (
-          <div className={appSt.containerBS}>
-            <Typography.TitleResponsive tag="h3" view="small" font="system" weight="semibold">
-              Введите код из сообщения, чтобы открыть брокерский счёт и купить этот актив
-            </Typography.TitleResponsive>
-            <Typography.Text tag="p" view="primary-medium" color="secondary">
-              Код отправлен на телефон указанный в анкете
-            </Typography.Text>
-
-            <div className={appSt.codeBoxContainer}>
-              <div className={appSt.codeBox}>{splittedOtp[0] ?? ''}</div>
-              <div className={appSt.codeBox}>{splittedOtp[1] ?? ''}</div>
-              <div className={appSt.codeBox}>{splittedOtp[2] ?? ''}</div>
-              <div className={appSt.codeBox}>{splittedOtp[3] ?? ''}</div>
-            </div>
-          </div>
-        );
-
-      default:
-        return null;
-    }
-  };
-
-  const bsButton = () => {
-    switch (step) {
-      case 1:
-        return (
-          <div className={appSt.containerBS}>
-            <Typography.Text view="component-secondary">
-              C вашего текущего счета будет списана сумма для покупки выбранной бумаги и зачислено на брокерский счет
-            </Typography.Text>
-            <Typography.Text view="component-secondary">
-              Нажимая «Продолжить», вы подписываете документы для открытия брокерского счёта
-            </Typography.Text>
-            <ButtonMobile block view="primary" onClick={submit} disabled={!otpCode}>
-              Потвердить и купить
-            </ButtonMobile>
-          </div>
-        );
-
-      default:
-        return null;
-    }
-  };
 
   return (
     <>
@@ -268,10 +219,36 @@ export const App = () => {
         onClose={() => setOpenBS(false)}
         hasCloser
         titleAlign="center"
-        actionButton={bsButton()}
+        actionButton={
+          <div className={appSt.containerBS}>
+            <Typography.Text view="component-secondary">
+              C вашего текущего счета будет списана сумма для покупки выбранной бумаги и зачислено на брокерский счет
+            </Typography.Text>
+            <Typography.Text view="component-secondary">
+              Нажимая «Продолжить», вы подписываете документы для открытия брокерского счёта
+            </Typography.Text>
+            <ButtonMobile block view="primary" onClick={submit} disabled={!otpCode}>
+              Потвердить и купить
+            </ButtonMobile>
+          </div>
+        }
         initialHeight="full"
       >
-        {bsContent()}
+        <div className={appSt.containerBS}>
+          <Typography.TitleResponsive tag="h3" view="small" font="system" weight="semibold">
+            Введите код из сообщения, чтобы открыть брокерский счёт и купить этот актив
+          </Typography.TitleResponsive>
+          <Typography.Text tag="p" view="primary-medium" color="secondary">
+            Код отправлен на телефон указанный в анкете
+          </Typography.Text>
+
+          <div className={appSt.codeBoxContainer}>
+            <div className={appSt.codeBox}>{splittedOtp[0] ?? ''}</div>
+            <div className={appSt.codeBox}>{splittedOtp[1] ?? ''}</div>
+            <div className={appSt.codeBox}>{splittedOtp[2] ?? ''}</div>
+            <div className={appSt.codeBox}>{splittedOtp[3] ?? ''}</div>
+          </div>
+        </div>
       </BottomSheet>
 
       <Notification
