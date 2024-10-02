@@ -8,9 +8,7 @@ import { Typography } from '@alfalab/core-components/typography';
 import { useCallback, useState } from 'react';
 import rubIcon from './assets/rubIcon.png';
 import sberIcon from './assets/sber.png';
-import { LS, LSKeys } from './ls';
 import { appSt } from './style.css';
-import { ThxLayout } from './thx/ThxLayout';
 
 const OPTIONS = [
   { key: 'Лимитная заявка', content: 'Лимитная заявка' },
@@ -29,13 +27,10 @@ export const App = () => {
   const [price, setPrice] = useState(268.7);
   const [count, setCount] = useState(100);
   const [reqType, setReqTpe] = useState('Лимитная заявка');
-  const [thxShow, setThx] = useState(LS.getItem(LSKeys.ShowThx, false));
   const splittedOtp = otpCode.split('');
   const submit = useCallback(() => {
     setLoading(true);
 
-    // LS.setItem(LSKeys.ShowThx, true);
-    setThx(true);
     setLoading(false);
 
     // sendDataToGA({
@@ -71,10 +66,6 @@ export const App = () => {
       setCode(generate4RandomDigits());
     }, 3000);
   }, []);
-
-  if (thxShow) {
-    return <ThxLayout />;
-  }
 
   return (
     <>
