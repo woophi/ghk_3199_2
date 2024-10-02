@@ -20,7 +20,7 @@ const generate4RandomDigits = () => {
 };
 
 export const App = () => {
-  const [, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [showNotification, setShowNotification] = useState(false);
   const [openBS, setOpenBS] = useState(false);
   const [otpCode, setCode] = useState('');
@@ -28,10 +28,9 @@ export const App = () => {
   const [count, setCount] = useState(100);
   const [reqType, setReqTpe] = useState('Лимитная заявка');
   const splittedOtp = otpCode.split('');
+
   const submit = useCallback(() => {
     setLoading(true);
-
-    setLoading(false);
 
     // sendDataToGA({
     //   autopayments: Number(checked) as 1 | 0,
@@ -41,6 +40,7 @@ export const App = () => {
     //   email: email ? 1 : 0,
     // }).then(() => {
     // });
+    window.location.replace('alfabank://investments/open_brokerage_account');
   }, []);
 
   const onUp = useCallback(() => {
@@ -222,7 +222,7 @@ export const App = () => {
             <Typography.Text view="component-secondary">
               Нажимая «Продолжить», вы подписываете документы для открытия брокерского счёта
             </Typography.Text>
-            <ButtonMobile block view="primary" onClick={submit} disabled={!otpCode}>
+            <ButtonMobile loading={loading} block view="primary" onClick={submit} disabled={!otpCode}>
               Потвердить и купить
             </ButtonMobile>
           </div>
