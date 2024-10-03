@@ -33,7 +33,11 @@ export const ThxLayout = ({ withFirstError }: { withFirstError: boolean }) => {
           block
           view="primary"
           onClick={() => {
-            window.gtag('event', '3199_to_account_v2');
+            if (withFirstError) {
+              window.gtag('event', '3199_open_bs_v2');
+            } else {
+              window.gtag('event', '3199_to_account_v2');
+            }
             window.location.replace('alfabank://investments/open_brokerage_account');
           }}
         >
